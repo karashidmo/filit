@@ -6,97 +6,110 @@
 /*   By: bhamdi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 02:09:02 by bhamdi            #+#    #+#             */
-/*   Updated: 2017/03/24 06:01:41 by bhamdi           ###   ########.fr       */
+/*   Updated: 2017/08/14 11:51:11 by krashid-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "./libft/libft.h"
+#include "fillit.h"
 
-void    error(int i);
+#define I i[0]
+#define J i[1]
+#define K i[2]
+#define L i[3]
+#define LINK i[4]
 
-// verification de nblink dans chaques tetriminos 
-/**************************************/
-char	***test_grille(char ***tab, int nbtetris)
-{ 
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	int nblink = 0;
-
-	while (i < nbtetris)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			k = 0;
-			while (k < 4)
-			{
-				printf("tab %d%d%d = [%c]\n",i,j,k,tab[i][j][k]);
-				if (tab[i][j][k] == '#')
-				{
-					k + 1 < 4 &&  tab[i][j][k + 1] == '#' ? nblink++ : 0;
-					j + 1 < 4 && tab[i][j + 1][k] == '#' ? nblink++ : 0;
-					k - 1 >= 0 && tab[i][j][k - 1] == '#' ? nblink++ : 0;
-					j - 1 >= 0 && tab[i][j -1][k] == '#' ? nblink++ : 0;
-					printf("%d %d %d = # --> nblink = [%d]\n",i,j,k,nblink);
-				}
-				k++;
-			}
-			j++;
-		}
-		printf("%d %d %d = # --> nblink = [%d]\n",i,j,k,nblink);
-		nblink = 0;
-		i++;
-	}
-
-	return(tab);
-}
-//  metre les tetriminos en tab
-/**************************************/
-char ***split_tetris(char *s, int nbtetris)
+static void	l_affect_char(char ***tab, int i[5], char lettre, int nbtab)
 {
-	char    ***tab;
-	int        i;
-	int        j;
-	int        k;
-	int		   t;
-	i = 0;
-	(!(tab = malloc(sizeof(char**) * nbtetris + 1))) ? error(11) : NULL;
-	while (i < nbtetris)
+	K + 1 < 4 && (tab[nbtab][J][K + 1] == lettre ||
+			tab[nbtab][J][K + 1] == '#') ? LINK++ : 0;
+	J + 1 < 4 && (tab[nbtab][J + 1][K] == lettre ||
+			tab[nbtab][J + 1][K] == '#') ? LINK++ : 0;
+	K - 1 >= 0 && (tab[nbtab][J][K - 1] == lettre ||
+			tab[nbtab][J][K - 1] == '#') ? LINK++ : 0;
+	J - 1 >= 0 && (tab[nbtab][J - 1][K] == lettre ||
+			tab[nbtab][J - 1][K] == '#') ? LINK++ : 0;
+}
+
+/*
+ ** verification de nblink dans chaques tetriminos
+ */
+
+int			test_grille(char ***tab, char lettre, int nbtab)
+{
+	int i[5];
+
+	J = 0;
+	I = 0;
+	LINK = 0;
+	while (J < 4)
 	{
-		(!(tab[i] = malloc(sizeof(char*) * 4))) ? error(11) : NULL;
+		K = 0;
+		while (K < 4)
+		{
+			if (tab[nbtab][J][K] == '#' && (tab[nbtab][J][K] = lettre))
+				l_affect_char(tab, i, lettre, nbtab);
+			else
+				tab[nbtab][J][K] = '\0';
+			K++;
+		}
+		J++;
+	}
+	move_tetri_x(tab, nbtab);
+	move_tetri_y(tab, nbtab);
+	return (LINK);
+}
+
+/*
+ ** malloc de tab
+ */
+
+char		***malloc_tab(int nb)
+{
+	char	***tab;
+	int		i;
+	int		j;
+
+	i = 0;
+	(!(tab = ft_memalloc(sizeof(char**) * nb + 1))) ? error(1) : NULL;
+	while (i < nb)
+	{
+		(!(tab[i] = ft_memalloc(sizeof(char*) * 5))) ? error(1) : NULL;
 		j = -1;
 		while (++j < 4)
-			(!(tab[i][j] = malloc(sizeof(char) * 4))) ? error(11) : NULL;
+			(!(tab[i][j] = ft_memalloc(sizeof(char) * 5))) ? error(1) : NULL;
 		i++;
 	}
-	i = 0;
-	t = 0;
-	while (i < nbtetris)
+	return (tab);
+}
+
+/*
+ ** metre les tetriminos en tab
+ */
+
+char		***split_tetris(char *s, int nb, char ***tab)
+{
+	int		i[3];
+
+	I = 0;
+	while (I < nb)
 	{
-		j = 0;
-		while (j < 5)
+		J = 0;
+		while (J < 5)
 		{
-			k = 0;
-			while (k < 5)
+			K = 0;
+			while (K < 5)
 			{
-				printf("%d %d %d = [%c]\n",i,j,k,s[t]);
-				if ((s[t] == '\n') && s[t - 1] == '\n')
+				if ((*s == '\n' || *s == '\0') && *(s - 1) == '\n')
 				{
-					k = 0;
-					j++;
+					s++;
+					break ;
 				}
-				tab[i][j][k] = s[t];
-				printf("cette str est egale a %c\n", s[t]);
-				k++;
-				t++;
+				tab[I][J][K] = *s;
+				((K++) || 1) ? (s++) : 0;
 			}
-			j++;
+			J++;
 		}
-		i++;
+		I++;
 	}
 	return (tab);
 }
