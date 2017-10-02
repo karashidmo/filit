@@ -6,15 +6,19 @@
 /*   By: krashid- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:24 by krashid-          #+#    #+#             */
-/*   Updated: 2017/08/14 12:10:29 by krashid-         ###   ########.fr       */
+/*   Updated: 2017/09/24 17:55:21 by bhamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+/*
+*********************MOVE X******************
+*/
+
 int		l_check_free_x(char ***tab, int nbtab)
 {
-	int		x;
+	int	x;
 
 	x = -1;
 	while (++x < 4)
@@ -25,8 +29,8 @@ int		l_check_free_x(char ***tab, int nbtab)
 
 void	move_tetri_y(char ***tab, int nbtab)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	while (l_check_free_x(tab, nbtab))
 	{
@@ -35,27 +39,24 @@ void	move_tetri_y(char ***tab, int nbtab)
 		{
 			y = 0;
 			while (++y < 4)
+			{
 				if (tab[nbtab][y][x])
 				{
 					tab[nbtab][y - 1][x] = tab[nbtab][y][x];
 					tab[nbtab][y][x] = '\0';
 				}
+			}
 		}
 	}
 }
 
 /*
- *********************MOVE X******************
- */
-
-/*
- ** return 1 if free
- ** return 0 if not free
- */
+*********************MOVE Y******************
+*/
 
 int		l_check_free_y(char ***tab, int nbtab)
 {
-	int		y;
+	int	y;
 
 	y = -1;
 	while (++y < 4)
@@ -66,8 +67,8 @@ int		l_check_free_y(char ***tab, int nbtab)
 
 void	move_tetri_x(char ***tab, int nbtab)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	while (l_check_free_y(tab, nbtab))
 	{
@@ -76,11 +77,13 @@ void	move_tetri_x(char ***tab, int nbtab)
 		{
 			x = 0;
 			while (++x < 4)
+			{
 				if (tab[nbtab][y][x])
 				{
 					tab[nbtab][y][x - 1] = tab[nbtab][y][x];
 					tab[nbtab][y][x] = '\0';
 				}
+			}
 		}
 	}
 }

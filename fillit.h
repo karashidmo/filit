@@ -6,7 +6,7 @@
 /*   By: bhamdi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 01:22:36 by bhamdi            #+#    #+#             */
-/*   Updated: 2017/08/14 12:07:37 by krashid-         ###   ########.fr       */
+/*   Updated: 2017/09/24 18:24:24 by bhamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*ft_strcpy(char *dest, const char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	***split_tetris(char *s, int nb, char ***tab);
 int		test_grille(char ***tab, char lettre, int nbtab);
-void	show_tetri(char ***tab);
 void	move_tetri_x(char ***tab, int nbtab);
 void	move_tetri_y(char ***tab, int nbtab);
 char	**map_malloc(int nbtab);

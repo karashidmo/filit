@@ -6,7 +6,7 @@
 /*   By: krashid- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 20:28:32 by krashid-          #+#    #+#             */
-/*   Updated: 2017/08/14 12:02:22 by krashid-         ###   ########.fr       */
+/*   Updated: 2017/09/24 18:06:01 by bhamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,16 @@
 
 int		is_available(char **map, int y, int x, char **tetri)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < 4)
 	{
-		if (!map[y + i])
-			return (0);
 		j = 0;
 		while (j < 4)
 		{
-			if (!map[y + i][x + j])
-				return (0);
-			if (tetri[i][j] && map[y + i][x + j] != '.')
+			if (tetri[i][j] && (!map[y + i] || map[y + i][x + j] != '.'))
 				return (0);
 			j++;
 		}
@@ -38,8 +34,8 @@ int		is_available(char **map, int y, int x, char **tetri)
 
 void	take_off_tetri(char **map, int y, int x, char **tetri)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < 4)
@@ -61,8 +57,8 @@ void	take_off_tetri(char **map, int y, int x, char **tetri)
 
 void	fillin_the_map(char **map, int y, int x, char **tetri)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < 4)

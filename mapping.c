@@ -6,7 +6,7 @@
 /*   By: krashid- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/06 16:02:25 by krashid-          #+#    #+#             */
-/*   Updated: 2017/08/14 14:06:10 by krashid-         ###   ########.fr       */
+/*   Updated: 2017/09/24 17:43:19 by bhamdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	**first_fill(char ***tab, int nb)
 		i = 0;
 		while (i < size)
 		{
-			map[i] =ft_memalloc(sizeof(char) * (size + 1));
 			(!(map[i] = ft_memalloc(sizeof(char) * (size + 1)))) ? error(1) : 0;
 			ft_memset(map[i], '.', size);
 			i++;
@@ -72,12 +71,12 @@ char	**first_fill(char ***tab, int nb)
 
 int		backtracking(char **map, char ***tetri)
 {
-	int i[2];
+	int	i[2];
 
 	I = 0;
 	if (!(*tetri))
 		return (1);
-	while (map[I])
+	while (map[I] && *tetri)
 	{
 		J = 0;
 		while (map[I][J])

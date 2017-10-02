@@ -6,7 +6,7 @@
 /*   By: bhamdi <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 02:09:02 by bhamdi            #+#    #+#             */
-/*   Updated: 2017/08/14 11:51:11 by krashid-         ###   ########.fr       */
+/*   Updated: 2017/09/28 00:33:31 by krashid-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static void	l_affect_char(char ***tab, int i[5], char lettre, int nbtab)
 }
 
 /*
- ** verification de nblink dans chaques tetriminos
- */
+** verification de nblink dans chaques tetriminos
+*/
 
 int			test_grille(char ***tab, char lettre, int nbtab)
 {
@@ -60,8 +60,8 @@ int			test_grille(char ***tab, char lettre, int nbtab)
 }
 
 /*
- ** malloc de tab
- */
+** malloc de tab
+*/
 
 char		***malloc_tab(int nb)
 {
@@ -83,8 +83,8 @@ char		***malloc_tab(int nb)
 }
 
 /*
- ** metre les tetriminos en tab
- */
+** metre les tetriminos en tab
+*/
 
 char		***split_tetris(char *s, int nb, char ***tab)
 {
